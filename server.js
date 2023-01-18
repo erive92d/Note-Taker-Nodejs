@@ -1,7 +1,8 @@
 const express = require("express")
 const path = require("path")
 const dataBase = require("./db/db.json")
-const fs = require("fs")
+const fs = require("fs");
+const { json } = require("express");
 
 
 const PORT = 3001;
@@ -25,8 +26,8 @@ app.post('/api/notes',(req,res)=> {
         const {title,text} = req.body
         let newNotes = {
             title:title,
-            text:text
-
+            text:text,
+            id: Math.floor(Math.random() * 100) //ADDED ID FOR DELETE
         }
 
         //READ DATABASE FIRST
@@ -42,6 +43,7 @@ app.post('/api/notes',(req,res)=> {
                 })
             }
         })
+    
         res.status(201).json('Success')
     }
      else {
@@ -58,6 +60,34 @@ app.get('/api/notes',(req,res)=> {
         }
         
     })
+})
+
+app.delete('/api/notes/:id',(req,res)=> {
+ 
+//THIS IS THE PARAMS WHICH IS THE ID PROVIDED FROM INDEX.JS DELETE RQUEST
+ const currentId = Number(req.params.id)
+ 
+    if(req.params.id) {
+        fs.readFile("./db/db.json","utf-8",(err,data)=> {
+            if(err) {
+                console.log(err)
+            } else {
+                const jsonParams = JSON.parse(data)
+                // console.log(jsonParams)
+                jsonParams.forEach((items)=> {
+                    if(items.id === currentId) {
+                        const index = jsonParams.indexOf(items) //IF TRUE, FIND THE INDEX OF THIS OBJECT
+                        jsonParams.splice(index, 1) //DELETE THIS OBJECT
+                        fs.writeFile('./db/db.json',JSON.stringify(jsonParams,null,4),err=> {
+                            err?console.log(err):console.log('Successfully removed',items)
+                        })
+                    }
+                })
+            }
+        })
+
+    }
+    
 })
 
 app.listen(PORT, ()=> {
