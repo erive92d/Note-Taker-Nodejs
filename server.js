@@ -67,7 +67,7 @@ app.delete('/api/notes/:id',(req,res)=> {
 //THIS IS THE PARAMS WHICH IS THE ID PROVIDED FROM INDEX.JS DELETE RQUEST
  const currentId = Number(req.params.id)
  
-    if(req.params.id) {
+    if(currentId) {
         fs.readFile("./db/db.json","utf-8",(err,data)=> {
             if(err) {
                 console.log(err)
@@ -79,14 +79,16 @@ app.delete('/api/notes/:id',(req,res)=> {
                         const index = jsonParams.indexOf(items) //IF TRUE, FIND THE INDEX OF THIS OBJECT
                         jsonParams.splice(index, 1) //DELETE THIS OBJECT
                         fs.writeFile('./db/db.json',JSON.stringify(jsonParams,null,4),err=> {
-                            err?console.log(err):console.log('Successfully removed',items)
+                            err?console.log(err):res.json(jsonParams)
                         })
-                    }
+                        
+                    } 
                 })
             }
         })
 
     }
+    
     
 })
 

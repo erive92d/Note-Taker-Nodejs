@@ -1,1 +1,6 @@
-[{"title":"Test Title","text":"Test text"},{"title":"Morning","text":"Do bed, make breakfast","id":57},{"title":"Walk the dog","text":"After breakfast","id":18}]
+[
+    {
+        "title": "Test Title",
+        "text": "Test text"
+    }
+]
