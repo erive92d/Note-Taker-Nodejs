@@ -38,7 +38,8 @@ express
 ## Usage
 To add a screenshot, create an assets/images folder in your repository and upload your screenshot to it.
 
-![alt text](assets/images/screenshot.png)
+![2023-01-19](https://user-images.githubusercontent.com/110507887/213596516-6d428d47-c4d2-452b-bd40-35b8d963ea43.png)
+
 
 
 
